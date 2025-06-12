@@ -13,6 +13,8 @@ class Presentacion extends Model
 
     protected $fillable = [
         'nombre',
+        'descripcion',
+        'estado',
     ];
 
     // Relación: Una presentación puede aplicarse a muchos productos

@@ -32,13 +32,13 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('ubicaciones')
                 ->onDelete('set null');
-            $table->foreignId('estado_antiguo_id')
+            $table->foreignId('condicion_antigua_id')
                 ->nullable()
-                ->constrained('estados')
+                ->constrained('condiciones')
                 ->onDelete('set null');
-            $table->foreignId('estado_nuevo_id')
+            $table->foreignId('condicion_nueva_id')
                 ->nullable()
-                ->constrained('estados')
+                ->constrained('condiciones')
                 ->onDelete('set null');
             $table->timestamps();
         });

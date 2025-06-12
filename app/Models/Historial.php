@@ -15,10 +15,10 @@ class Historial extends Model
         'producto_id',
         'tipo_evento_id',
         'user_id',
-        'ubicacion_antigua',
-        'ubicacion_nueva',
-        'estado_antiguo',
-        'estado_nuevo',
+        'ubicacion_antigua_id',
+        'ubicacion_nueva_id',
+        'condicion_antigua_id',
+        'condicion_nueva_id',
         'fecha_evento',
         'descripcion_evento'
     ];

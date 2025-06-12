@@ -29,13 +29,14 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('ubicaciones')
                 ->onDelete('set null');
-            $table->foreignId('estado_id')
+            $table->foreignId('condicion_id')
                 ->nullable()
-                ->constrained('estados')
+                ->constrained('condiciones')
                 ->onDelete('set null');
             $table->string('codigo', 50)->unique();
             $table->string('nombre', 255);
             $table->string('serial', 255)->nullable();
+            $table->tinyInteger('estado')->default(1); // 1: activo, 0: inactivo
             $table->timestamps();
         });
     }

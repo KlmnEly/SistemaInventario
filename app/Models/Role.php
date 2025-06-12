@@ -13,6 +13,7 @@ class Role extends Model
 
     protected $fillable = [
         'nombre',
+        'estado',
     ];
 
     // Relación: Un rol puede ser asignado a muchos usuarios

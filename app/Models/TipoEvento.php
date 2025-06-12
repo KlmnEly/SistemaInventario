@@ -14,6 +14,7 @@ class TipoEvento extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'estado',
     ];
 
     // Relación: Un tipo de evento puede aparecer en muchos historiales

@@ -13,6 +13,8 @@ class Marca extends Model
 
     protected $fillable = [
         'nombre',
+        'descripcion',
+        'estado',
     ];
 
     // Relación: Una marca puede aplicarse a muchos productos

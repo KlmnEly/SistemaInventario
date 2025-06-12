@@ -14,6 +14,7 @@ class Ubicacion extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'estado',
     ];
 
     // Relaciones:

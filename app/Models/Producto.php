@@ -16,7 +16,7 @@ class Producto extends Model
         'marca_id',
         'presentacion_id',
         'ubicacion_id',
-        'estado_id',
+        'condicion_id',
         'serial',
         'nombre',
     ];
@@ -46,10 +46,10 @@ class Producto extends Model
         return $this->belongsTo(Ubicacion::class);
     }
 
-    // Un producto pertenece a un estado
-    public function estado()
+    // Un producto pertenece a una condicion
+    public function condicion()
     {
-        return $this->belongsTo(Estado::class);
+        return $this->belongsTo(Condicion::class);
     }
 
     // Un producto puede tener muchos atributos
