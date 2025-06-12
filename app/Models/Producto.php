@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Producto extends Model
+{
+    use HasFactory;
+
+    protected $table = 'productos'; // Asegura que se mapea a la tabla 'productos'
+
+    protected $fillable = [
+        'codigo_unico',
+        'marca_id',
+        'presentacion_id',
+        'ubicacion_id',
+        'estado_id',
+        'serial',
+        'nombre',
+    ];
+
+    // Relaciones:
+    // Un producto pertenece a una marca
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class);
+    }
+
+    // Un producto pertenece a una categoría
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
+
+    // Un producto pertenece a una presentación
+    public function presentacion()
+    {
+        return $this->belongsTo(Presentacion::class);
+    }
+
+    // Un producto pertenece a una ubicación
+    public function ubicacion()
+    {
+        return $this->belongsTo(Ubicacion::class);
+    }
+
+    // Un producto pertenece a un estado
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class);
+    }
+
+    // Un producto puede tener muchos atributos
+    public function atributos()
+    {
+        return $this->hasMany(Atributo::class);
+    }
+
+    // Un producto puede tener muchos registros en el historial
+    public function historial()
+    {
+        return $this->hasMany(Historial::class);
+    }
+}
