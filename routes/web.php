@@ -12,9 +12,7 @@ Route::get('/', function () {
     return view('template');
 });
 
-Route::get('/panel', function () {
-    return view('panel.index');
-});
+Route::view('/panel', 'panel.index')->name('panel');
 
 Route::resource('categorias', CategoriaController::class);
 Route::resource('marcas', MarcaController::class);

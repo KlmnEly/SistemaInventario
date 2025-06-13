@@ -40,7 +40,7 @@
             <li class="breadcrumb-item active">Categorias</li>
         </ol>
         <div class="mb-4">
-            <a href="">
+            <a href="{{ route('categorias.create') }}">
                 <button type="button" class="btn btn-primary">Añadir nuevo registro</button>
             </a>
         </div>

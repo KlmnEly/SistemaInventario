@@ -3,7 +3,7 @@
 @section('title', 'Editar categoria')
 
 @push('css')
-    
+
 @endpush
 
 @section('content')
@@ -22,7 +22,7 @@
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control" value="{{ old('nombre', $categoria->caracteristica->nombre) }}">
+                    <input type="text" name="nombre" id="nombre" class="form-control" value="{{ old('nombre', $categoria->nombre) }}">
                     @error('nombre')
                         <small class="text-danger">{{ '*' . $message }}</small>
                     @enderror
@@ -30,7 +30,7 @@
 
                 <div class="col-md-12">
                     <label for="descripcion" class="form-label">Descripcion:</label>
-                    <textarea name="descripcion" id="descripcion" rows="3" class="form-control">{{ old('descripcion', $categoria->caracteristica->descripcion) }}</textarea>
+                    <textarea name="descripcion" id="descripcion" rows="3" class="form-control">{{ old('descripcion', $categoria->descripcion) }}</textarea>
                     @error('descripcion')
                         <small class="text-danger">{{ '*' . $message }}</small>
                     @enderror
@@ -47,5 +47,5 @@
 @endsection
 
 @push('js')
-    
+
 @endpush
