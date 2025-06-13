@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\PresentacionController;
+use App\Http\Controllers\TipoEventoController;
+use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -11,6 +15,13 @@ Route::get('/', function () {
 Route::get('/panel', function () {
     return view('panel.index');
 });
+
+Route::resource('categorias', CategoriaController::class);
+Route::resource('marcas', MarcaController::class);
+Route::resource('presentaciones', PresentacionController::class);
+Route::resource('ubicaciones', UbicacionController::class);
+Route::resource('tiposEvento', TipoEventoController::class);
+
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -28,8 +39,3 @@ Route::get('/500', function () {
     return view('pages.500');
 });
 
-// Route::get('/categorias', function () {
-//     return view('categorias.index');
-// });
-
-Route::resource('categorias', CategoriaController::class);
