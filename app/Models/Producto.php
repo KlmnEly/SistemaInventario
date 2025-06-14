@@ -14,7 +14,6 @@ class Producto extends Model
     protected $fillable = [
         'codigo_unico',
         'marca_id',
-        'presentacion_id',
         'ubicacion_id',
         'condicion_id',
         'serial',
@@ -32,12 +31,6 @@ class Producto extends Model
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);
-    }
-
-    // Un producto pertenece a una presentación
-    public function presentacion()
-    {
-        return $this->belongsTo(Presentacion::class);
     }
 
     // Un producto pertenece a una ubicación
