@@ -5,12 +5,11 @@
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/template.css') }}" rel="stylesheet" />
+    @endpush
+
+    @section('content')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@endpush
-
-@section('content')
-
-    @if (session('success'))
+        @if (session('success'))
         <script>
 
             let message = "{{ session('success')}}"
@@ -32,11 +31,10 @@
         </script>
     @endif
 
-
     <div class="container-fluid px-4">
         <h1 class="mt-4 text-center">Categorías</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
             <li class="breadcrumb-item active">Categorias</li>
         </ol>
         <div class="mb-4">
@@ -63,67 +61,72 @@
                     </thead>
                     <tbody>
                         @foreach ($categorias as $categoria)
-                            <tr>
-                                <td>{{ $categoria->nombre }}</td>
-                                <td>{{ $categoria->descripcion }}</td>
-                                <td class="text-left">
+                        <tr>
+                            <td>{{ $categoria->nombre }}</td>
+                            <td>{{ $categoria->descripcion }}</td>
+                            <td class="text-left">
+                                @if ($categoria->estado == 1)
+                                <span class="gw-bolder rounded bg-success text-white p-1">Activo</span>
+                                @else
+                                <span class="fw-bolder rounded bg-danger text-white p-1">Eliminado</span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                    <form action="{{ route('categorias.edit', ['categoria' => $categoria]) }}"
+                                        method="get">
+                                        <button type="submit" class="btn btn-warning">Editar</button>
+                                    </form>
                                     @if ($categoria->estado == 1)
-                                    <span class="gw-bolder rounded bg-success text-white p-1">Activo</span>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#confirmModal-{{$categoria->id}}">Eliminar</button>
                                     @else
-                                    <span class="fw-bolder rounded bg-danger text-white p-1">Eliminado</span>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                    data-bs-target="#confirmModal-{{$categoria->id}}">Restaurar</button>
                                     @endif
-                                </td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <form action="{{ route('categorias.edit', ['categoria' => $categoria]) }}"
-                                            method="get">
-                                            <button type="submit" class="btn btn-warning">Editar</button>
-                                        </form>
-                                        @if ($categoria->estado == 1)
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#confirmModal-{{$categoria->id}}">Eliminar</button>
-                                        @else
-                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#confirmModal-{{$categoria->id}}">Restaurar</button>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="confirmModal-{{$categoria->id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Mensaje de confirmacion</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            {{$categoria->estado == 1 ? '¿Seguro quieres eliminar esta categoría?' : '¿Seguro que quieres restaurar la categoría?'}}
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Cerrar</button>
-                                                <form action="{{route('categorias.destroy', ['categoria' => $categoria->id])}}" method="post">
-                                                    @method('DELETE')
-                                                    @csrf
+                        <!-- Modal -->
+                        <div class="modal fade" id="confirmModal-{{$categoria->id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Mensaje de confirmacion</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{$categoria->estado == 1 ? '¿Seguro quieres eliminar esta categoría?' : '¿Seguro que quieres restaurar la categoría?'}}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                        <form action="{{route('categorias.destroy', ['categoria' => $categoria->id])}}" method="post">
+                                            @method('DELETE')
+                                            @csrf
                                             <button type="submit" class="btn btn-danger">Confirmar</button>
                                         </form>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-@endsection
+    @endsection
 
-@push('js')
+    @push('js')
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
-@endpush
+
+    </script>
+
+
+
+    @endpush

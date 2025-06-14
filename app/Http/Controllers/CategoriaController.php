@@ -31,13 +31,13 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validación de los datos del formulario
+        // Validación de los datos del formulario
         $request->validate([
             'nombre' => 'required|string|max:255|unique:categorias,nombre', // 'nombre' es obligatorio, string, máx 255 y único en la tabla 'categorias'
             'descripcion' => 'nullable|string', // 'descripcion' es opcional y string
         ]);
 
-        // 2. Creamos la nueva categoría en la base de datos
+        // Creamos la nueva categoría en la base de datos
         Categoria::create($request->all()); // Los datos validados se usan para crear el registro
 
         // Redireccionamos al usuario con un mensaje de éxito
@@ -47,9 +47,9 @@ class CategoriaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Categoria $categoria)
     {
-        //
+        return Categoria::findOrFail($categoria->id); // Devuelve la categoría encontrada o un error 404 si no existe
     }
 
     /**
@@ -94,20 +94,17 @@ public function update(Request $request, Categoria $categoria)
 
         // Redirecciona con un mensaje de éxito
         if ($categoria->estado == 1) {
-            Categoria::where('id', $categoria->id)
-            ->update([
-                'estado' => 0
-            ]);
+            Categoria::where('id', $categoria->id)->update(['estado' => 0]);
 
-            $message = 'Categoria eliminada';
+            $message = 'Categoria eliminada exitosamente';
         } else {
             Categoria::where('id', $categoria->id)
             ->update([
                 'estado' => 1
             ]);
-            $message = 'Categoria restaurada';
+            $message = 'Categoria restaurada exitosamente';
         }
 
-        return redirect()->route('categorias.index')->with('success', 'Categoría eliminada exitosamente.');
+        return redirect()->route('categorias.index')->with('success', $message);
     }
 }
