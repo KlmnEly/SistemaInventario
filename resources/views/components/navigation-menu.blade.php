@@ -7,7 +7,34 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
+                <div class="sb-sidenav-menu-heading">Administador</div>
+                <a class="nav-link" href="/administracion">
+                    <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                    Panel Administración
+                </a>
+                
+
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAdmin"
+                    aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Panel Administración
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseAdmin" aria-labelledby="headingOne"
+                    data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="/categorias">Categorias</a>
+                        <a class="nav-link" href="#">Marcas</a>
+                        <a class="nav-link" href="#">Ubicaciones</a>
+                        <a class="nav-link" href="#">Estados</a>
+                        <a class="nav-link" href="#">Tipo de evento</a>
+                    </nav>
+                </div>
+
+
+
                 <div class="sb-sidenav-menu-heading">Interface</div>
+
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
                     aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -21,6 +48,8 @@
                         <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                     </nav>
                 </div>
+
+
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
                     aria-expanded="false" aria-controls="collapsePages">
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
@@ -68,6 +97,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Tables
                 </a>
+                
             </div>
         </div>
         <div class="sb-sidenav-footer">

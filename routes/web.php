@@ -37,3 +37,9 @@ Route::get('/500', function () {
     return view('pages.500');
 });
 
+Route::get('/administracion',function(){
+    return view('pages.administracion');
+})->name('admin.panel');
+
+
+
