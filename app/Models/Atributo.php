@@ -13,8 +13,8 @@ class Atributo extends Model
 
     protected $fillable = [
         'producto_id',
-        'nombre_atributo',
-        'valor_atributo',
+        'nombre',
+        'valor',
     ];
 
     // Relación: Un atributo pertenece a un producto

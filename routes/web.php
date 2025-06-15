@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PresentacionController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\TipoEventoController;
 use App\Http\Controllers\UbicacionController;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +17,9 @@ Route::view('/panel', 'panel.index')->name('panel');
 
 Route::resource('categorias', CategoriaController::class);
 Route::resource('marcas', MarcaController::class);
-Route::resource('presentaciones', PresentacionController::class);
 Route::resource('ubicaciones', UbicacionController::class);
 Route::resource('tiposEvento', TipoEventoController::class);
+Route::resource('productos', ProductoController::class);
 
 
 Route::get('/login', function () {

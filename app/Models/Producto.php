@@ -12,12 +12,13 @@ class Producto extends Model
     protected $table = 'productos'; // Asegura que se mapea a la tabla 'productos'
 
     protected $fillable = [
-        'codigo_unico',
         'marca_id',
+        'categoria_id',
         'ubicacion_id',
         'condicion_id',
-        'serial',
+        'codigo',
         'nombre',
+        'serial',
     ];
 
     // Relaciones:
