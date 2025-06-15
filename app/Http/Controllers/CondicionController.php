@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Presentacion;
+use App\Models\Marca;
 use Illuminate\Http\Request;
 
-class PresentacionController extends Controller
+class CondicionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $presentaciones = Presentacion::all();
-        return view('presentaciones.index', [
-            'presentaciones' => $presentaciones,
-        ]);
+        return view('productos.index');
     }
 
     /**
@@ -23,7 +20,14 @@ class PresentacionController extends Controller
      */
     public function create()
     {
-        //
+        // Obtener las marcas activas para el formulario de creación de productos
+        $marcas = Marca::join('marcas as m')
+            ->where('m.estado', 1)
+            ->get();
+        dd($marcas);
+        return view('productos.create', [
+            'marcas' => $marcas,
+        ]);
     }
 
     /**

@@ -9,7 +9,7 @@ class TipoEvento extends Model
 {
     use HasFactory;
 
-    protected $table = 'tipo_evento'; // Aseguramos que se refiere a la tabla 'tipo_evento'
+    protected $table = 'tipos_evento'; // Aseguramos que se refiere a la tabla 'tipo_evento'
 
     protected $fillable = [
         'nombre',
