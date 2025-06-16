@@ -57,7 +57,9 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        return view('categorias.edit', ['categoria' => $categoria]);
+        return view('categorias.edit', [
+            'categoria' => $categoria
+        ]);
     }
 
     /**
@@ -88,26 +90,11 @@ public function update(Request $request, Categoria $categoria)
      */
     public function destroy(Categoria $categoria)
     {
-        // La restricción ahora se maneja a nivel de base de datos
-        // gracias al onDelete('set null') o onDelete('cascade') en la migración.
-        // $categoria->delete();
+        $categoria->estado = $categoria->estado ? 0 : 1; // Cambia el estado de la categoria
+        $categoria->save();
 
-        // Redirecciona con un mensaje de éxito
-        if ($categoria->estado == 1) {
-            Categoria::where('id', $categoria->id)
-            ->update([
-                'estado' => 0
-            ]);
+        $action = $categoria->estado == 0 ? 'eliminada' : 'restaurada';
 
-            $message = 'Categoria eliminada';
-        } else {
-            Categoria::where('id', $categoria->id)
-            ->update([
-                'estado' => 1
-            ]);
-            $message = 'Categoria restaurada';
-        }
-
-        return redirect()->route('categorias.index')->with('success', 'Categoría eliminada exitosamente.');
+        return redirect()->route('categorias.index')->with('success', "Categoria {$action} exitosamente.");
     }
 }

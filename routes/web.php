@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\MarcaController;
-use App\Http\Controllers\PresentacionController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\TipoEventoController;
 use App\Http\Controllers\UbicacionController;
@@ -20,6 +20,7 @@ Route::resource('marcas', MarcaController::class);
 Route::resource('ubicaciones', UbicacionController::class);
 Route::resource('tiposEvento', TipoEventoController::class);
 Route::resource('productos', ProductoController::class);
+Route::resource('historiales', HistorialController::class);
 
 
 Route::get('/login', function () {

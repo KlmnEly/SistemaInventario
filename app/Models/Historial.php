@@ -20,7 +20,7 @@ class Historial extends Model
         'condicion_antigua_id',
         'condicion_nueva_id',
         'fecha_evento',
-        'descripcion_evento'
+        'descripcion'
     ];
 
     protected $casts = [
@@ -58,15 +58,15 @@ class Historial extends Model
         return $this->belongsTo(Ubicacion::class, 'ubicacion_nueva_id');
     }
 
-    // Un registro de historial tiene un estado antiguo
+    // Un registro de historial tiene una condicion antiguo
     public function estadoAntiguo()
     {
-        return $this->belongsTo(Estado::class, 'estado_antiguo_id');
+        return $this->belongsTo(Condicion::class, 'condicion_antigua_id');
     }
 
-    // Un registro de historial tiene un estado nuevo
+    // Un registro de historial tiene una condicion nuevo
     public function estadoNuevo()
     {
-        return $this->belongsTo(Estado::class, 'estado_nuevo_id');
+        return $this->belongsTo(Condicion::class, 'condicion_nueva_id');
     }
 }

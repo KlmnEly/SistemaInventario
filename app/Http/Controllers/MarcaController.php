@@ -23,7 +23,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        //
+        return view('marcas.create');
     }
 
     /**
@@ -31,7 +31,13 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:marcas,nombre',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        Marca::create($request->all());
+        return redirect()->route('marcas.index')->with('success', 'Marca creada exitosamente.');
     }
 
     /**
@@ -45,24 +51,37 @@ class MarcaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Marca $marca)
     {
-        //
+        return view('marcas.edit', [
+            'marca' => $marca
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Marca $marca)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:marcas,nombre,' . $marca->id,
+            'descripcion' => 'nullable|string',
+        ]);
+
+        $marca->update($request->all());
+        return redirect()->route('marcas.index')->with('success', 'Marca actualizada exitosamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Marca $marca)
     {
-        //
+        $marca->estado = $marca->estado ? 0 : 1;
+        $marca->save();
+
+        $action = $marca->estado == 0 ? 'eliminada' : 'restaurada';
+
+        return redirect()->route('marcas.index')->with('success', "Marca {$action} exitosamente.");
     }
 }

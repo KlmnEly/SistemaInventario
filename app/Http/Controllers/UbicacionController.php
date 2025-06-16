@@ -23,7 +23,7 @@ class UbicacionController extends Controller
      */
     public function create()
     {
-        //
+        return view('ubicaciones.create');
     }
 
     /**
@@ -31,7 +31,13 @@ class UbicacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:ubicaciones,nombre',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        Ubicacion::create($request->all());
+        return redirect()->route('ubicaciones.index')->with('success', 'Ubicacion creada exitosamente.');
     }
 
     /**
@@ -45,24 +51,37 @@ class UbicacionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Ubicacion $ubicacion)
     {
-        //
+        return view('ubicaciones.edit', [
+            'ubicacion' => $ubicacion
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Ubicacion $ubicacion)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:ubicaciones,nombre,' . $ubicacion->id,
+            'descripcion' => 'nullable|string',
+        ]);
+
+        $ubicacion->update($request->all());
+        return redirect()->route('ubicaciones.index')->with('success', 'Ubicacion actualizada exitosamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Ubicacion $ubicacion)
     {
-        //
+        $ubicacion->estado = $ubicacion->estado ? 0 : 1; // Cambia el estado de la condicion
+        $ubicacion->save();
+
+        $action = $ubicacion->estado == 0 ? 'eliminada' : 'restaurada';
+
+        return redirect()->route('ubicaciones.index')->with('success', "Ubicacion {$action} exitosamente.");
     }
 }

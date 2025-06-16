@@ -23,7 +23,7 @@ class TipoEventoController extends Controller
      */
     public function create()
     {
-        //
+        return view('tiposEvento.create');
     }
 
     /**
@@ -31,7 +31,13 @@ class TipoEventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:tipos_evento,nombre',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        TipoEvento::create($request->all());
+        return redirect()->route('tiposEvento.index')->with('success', 'Evento creado exitosamente.');
     }
 
     /**
@@ -45,24 +51,37 @@ class TipoEventoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(TipoEvento $tipoEvento)
     {
-        //
+        return view('tiposEvento.edit', [
+            'tipoEvento' => $tipoEvento
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, TipoEvento $tipoEvento)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:tipos_evento,nombre,' . $tipoEvento->id,
+            'descripcion' => 'nullable|string',
+        ]);
+
+        $tipoEvento->update($request->all());
+        return redirect()->route('tiposEvento.index')->with('success', 'Evento actualizado exitosamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(TipoEvento $tipoEvento)
     {
-        //
+        $tipoEvento->estado = $tipoEvento->estado ? 0 : 1; // Cambia el estado de la condicion
+        $tipoEvento->save();
+
+        $action = $tipoEvento->estado == 0 ? 'eliminado' : 'restaurado';
+
+        return redirect()->route('tiposEvento.index')->with('success', "Evento {$action} exitosamente.");
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Marca;
+use App\Models\Condicion;
 use Illuminate\Http\Request;
 
 class CondicionController extends Controller
@@ -12,7 +12,10 @@ class CondicionController extends Controller
      */
     public function index()
     {
-        return view('productos.index');
+        $condiciones = Condicion::all();
+        return view('condiciones.index', [
+            'condiciones' => $condiciones,
+        ]);
     }
 
     /**
@@ -20,14 +23,7 @@ class CondicionController extends Controller
      */
     public function create()
     {
-        // Obtener las marcas activas para el formulario de creación de productos
-        $marcas = Marca::join('marcas as m')
-            ->where('m.estado', 1)
-            ->get();
-        dd($marcas);
-        return view('productos.create', [
-            'marcas' => $marcas,
-        ]);
+        return view('condiciones.create');
     }
 
     /**
@@ -35,7 +31,13 @@ class CondicionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:categorias,nombre',
+            'descripcion' => 'nullable|string',
+        ]);
+
+        Condicion::create($request->all());
+        return redirect()->route('condiciones.index')->with('success', 'Condicion creada exitosamente.');
     }
 
     /**
@@ -49,24 +51,37 @@ class CondicionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Condicion $condicion)
     {
-        //
+        return view('condiciones.edit', [
+            'condicion' => $condicion
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Condicion $condicion)
     {
-        //
+        $request->validate([
+        'nombre' => 'required|string|max:255|unique:categorias,nombre,' . $condicion->id,
+        'descripcion' => 'nullable|string',
+        ]);
+
+        $condicion->update($request->all());
+        return redirect()->route('condiciones.index')->with('success', 'Condicion actualizada exitosamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Condicion $condicion)
     {
-        //
+        $condicion->estado = $condicion->estado ? 0 : 1; // Cambia el estado de la condicion
+        $condicion->save();
+
+        $action = $condicion->estado == 0 ? 'eliminada' : 'restaurada';
+
+        return redirect()->route('condiciones.index')->with('success', "Condicion {$action} exitosamente.");
     }
 }
