@@ -21,10 +21,6 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('categorias')
                 ->onDelete('set null');
-            $table->foreignId('presentacion_id')
-                ->nullable()
-                ->constrained('presentaciones')
-                ->onDelete('set null');
             $table->foreignId('ubicacion_id')
                 ->nullable()
                 ->constrained('ubicaciones')
