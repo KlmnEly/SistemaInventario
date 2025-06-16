@@ -31,12 +31,13 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        Request::validate([
-            'nombre' => 'required|string|max:255|unique:marcas,nombre', // 'nombre' es obligatorio, string, máx 255 y único en la tabla 'marcas'
-            'descripcion' => 'nullable|string', // 'descripcion' es opcional y string
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:marcas,nombre', // 'nombre' es obligatorio
+            'descripcion' => 'nullable|string', // 'descripcion' es opcional
         ]);
-
+    
         Marca::create($request->all());
+    
         return redirect()->route('marcas.index')->with('success', 'Marca creada exitosamente.');
     }
 

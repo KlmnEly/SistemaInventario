@@ -23,7 +23,7 @@ class TipoEventoController extends Controller
      */
     public function create()
     {
-        //
+        return view('tiposEvento.create');
     }
 
     /**
@@ -31,38 +31,58 @@ class TipoEventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:marcas,nombre', // 'nombre' es obligatorio
+            'descripcion' => 'nullable|string', // 'descripcion' es opcional
+        ]);
+    
+        TipoEvento::create($request->all());
+    
+        return redirect()->route('tiposEvento.index')->with('success', 'Marca creada exitosamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(TipoEvento $tipoEvento)
     {
-        //
+        return TipoEvento::findOrFail($tipoEvento->id); // Devuelve la marca encontrada o un error 404 si no existe
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(TipoEvento $tipoEvento)
     {
-        //
+        return view('tiposEvento.edit', ['tipoEvento' => $tipoEvento]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, TipoEvento $tipoEvento)
     {
-        //
+        Request::validate([
+            'nombre' => 'required|string|max:255|unique:marcas,nombre,' . $tipoEvento->id, // 'nombre' es obligatorio, string, máx 255 y único en la tabla 'marcas', excepto el registro actual
+            'descripcion' => 'nullable|string', // 'descripcion' es opcional y string
+        ]);
+
+        $tipoEvento->update($request->all());
+        return redirect()->route('marcas.index')->with('success', 'Marca actualizada exitosamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(TipoEvento $tipoEvento)
     {
-        //
+        if ($tipoEvento->estado == 1) {
+            TipoEvento::where('id', $tipoEvento->id)->update(['estado' => 0]);
+            $message = 'Marca eliminada exitosamente';
+        } else {
+            TipoEvento::where('id', $tipoEvento->id)->update(['estado' => 1]);
+            $message = 'Marca restaurada exitosamente';
+        }
+        return redirect()->route('marcas.index')->with('success', $message);
     }
 }

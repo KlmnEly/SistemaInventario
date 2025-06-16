@@ -25,7 +25,7 @@
                         <p>Categorias</p>
                     </div>
                 </div>
-                <div class="card" style="width: 20%;">
+                <div class="card"  onclick="window.location.href='/marcas'" style="width: 20%;">
                     <div class="card-body d-flex justify-content-center align-content-center" >
                         <p>Marcas</p>
                     </div>
@@ -40,7 +40,7 @@
                         <p>Estados</p>
                     </div>
                 </div>
-                <div class="card" style="width: 20%;">
+                <div class="card" onclick="window.location.href='/tiposEvento'" style="width: 20%;">
                     <div class="card-body d-flex justify-content-center align-content-center" >
                         <p>Tipo de evento</p>
                     </div>
