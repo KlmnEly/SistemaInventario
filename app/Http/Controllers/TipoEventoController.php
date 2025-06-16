@@ -13,9 +13,7 @@ class TipoEventoController extends Controller
     public function index()
     {
         $tiposEvento = TipoEvento::all();
-        return view('tiposEvento.index', [
-            'tiposEvento' => $tiposEvento,
-        ]);
+        return view('tiposEvento.index', compact('tiposEvento'));
     }
 
     /**
@@ -32,7 +30,7 @@ class TipoEventoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255|unique:marcas,nombre', // 'nombre' es obligatorio
+            'nombre' => 'required|string|max:255|unique:tipos_evento,nombre', // 'nombre' es obligatorio
             'descripcion' => 'nullable|string', // 'descripcion' es opcional
         ]);
     
@@ -62,13 +60,13 @@ class TipoEventoController extends Controller
      */
     public function update(Request $request, TipoEvento $tipoEvento)
     {
-        Request::validate([
-            'nombre' => 'required|string|max:255|unique:marcas,nombre,' . $tipoEvento->id, // 'nombre' es obligatorio, string, máx 255 y único en la tabla 'marcas', excepto el registro actual
+        $request -> validate([
+            'nombre' => 'required|string|max:255|unique:tipos_evento,nombre,' . $tipoEvento->id, // 'nombre' es obligatorio, string, máx 255 y único en la tabla 'marcas', excepto el registro actual
             'descripcion' => 'nullable|string', // 'descripcion' es opcional y string
         ]);
 
         $tipoEvento->update($request->all());
-        return redirect()->route('marcas.index')->with('success', 'Marca actualizada exitosamente.');
+        return redirect()->route('tiposEvento.index')->with('success', 'Tipo de evento actualizado exitosamente.');
     }
 
     /**
@@ -78,11 +76,11 @@ class TipoEventoController extends Controller
     {
         if ($tipoEvento->estado == 1) {
             TipoEvento::where('id', $tipoEvento->id)->update(['estado' => 0]);
-            $message = 'Marca eliminada exitosamente';
+            $message = 'Tipo de evento eliminado exitosamente';
         } else {
             TipoEvento::where('id', $tipoEvento->id)->update(['estado' => 1]);
-            $message = 'Marca restaurada exitosamente';
+            $message = 'Tipo de evento restaurado exitosamente';
         }
-        return redirect()->route('marcas.index')->with('success', $message);
+        return redirect()->route('tiposEvento.index')->with('success', $message);
     }
 }
